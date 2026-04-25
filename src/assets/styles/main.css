@@ -1,0 +1,388 @@
+/* ============================================================
+   main.css — Mobile-first styles
+   Breakpoints:
+     sm  ≥ 480px
+     md  ≥ 768px
+     lg  ≥ 960px
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. Reset / base
+   ------------------------------------------------------------ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  font-size: 15px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: var(--p-font-family, 'Inter', sans-serif);
+  background-color: var(--p-surface-ground);
+  color: var(--p-text-color);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+img,
+video {
+  max-width: 100%;
+  display: block;
+}
+
+/* ------------------------------------------------------------
+   2. Layout wrapper
+   ------------------------------------------------------------ */
+.app-layout {
+  display: flex;
+  flex-direction: column;
+  min-height: 100dvh;
+}
+
+/* Topbar */
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1rem;     /* más compacto en móvil */
+}
+
+/* Contenido principal */
+main {
+  width: 100%;
+  padding: 1rem 0.75rem;     /* márgenes laterales mínimos en móvil */
+  margin-inline: auto;
+}
+
+/* sm: un poco más de aire */
+@media (min-width: 480px) {
+  main {
+    padding: 1.25rem 1rem;
+  }
+}
+
+/* md: padding generoso */
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+
+  .topbar {
+    padding: 0.75rem 1.5rem;
+  }
+
+  main {
+    padding: 1.5rem 1.5rem;
+  }
+}
+
+/* lg: ancho máximo centrado */
+@media (min-width: 960px) {
+  main {
+    max-width: 960px;
+    padding: 2rem 1rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   3. BalanceCard
+   ------------------------------------------------------------ */
+.balance-card {
+  border-radius: 1rem;
+  padding: 1.25rem 1rem;     /* compacto en móvil */
+  color: #fff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+}
+
+.balance-card__amount {
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.1;
+  word-break: break-all;
+}
+
+@media (min-width: 480px) {
+  .balance-card {
+    padding: 1.5rem 1.25rem;
+  }
+
+  .balance-card__amount {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .balance-card {
+    padding: 2rem 1.75rem;
+  }
+
+  .balance-card__amount {
+    font-size: 2.75rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   4. Tarjetas de resumen (ingresos / gastos)
+   ------------------------------------------------------------ */
+/* En móvil las tarjetas apiladas necesitan altura automática */
+.p-card {
+  height: auto !important;
+}
+
+@media (min-width: 768px) {
+  /* En tablet/desktop recuperamos h-full de PrimeFlex */
+  .h-full.p-card {
+    height: 100% !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   5. Grid responsive (complementa PrimeFlex col-12 / md:col-6)
+   ------------------------------------------------------------ */
+.grid {
+  row-gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    row-gap: 0;
+  }
+}
+
+/* ------------------------------------------------------------
+   6. Tabs de periodo (Mes / Año / Total)
+   ------------------------------------------------------------ */
+/* En móvil los tabs ocupan todo el ancho */
+.p-tablist {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+
+.p-tablist::-webkit-scrollbar {
+  display: none;
+}
+
+.p-tab {
+  white-space: nowrap;
+  min-width: 80px;
+  text-align: center;
+}
+
+/* Selectores de mes/año: apilan en columna en móvil */
+.period-selectors {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+@media (min-width: 480px) {
+  .period-selectors {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+/* ------------------------------------------------------------
+   7. Formulario de transacción
+   ------------------------------------------------------------ */
+.transaction-form .p-card-body {
+  padding: 1rem;
+}
+
+.transaction-form .form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 480px) {
+  .transaction-form .form-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (min-width: 768px) {
+  .transaction-form .p-card-body {
+    padding: 1.5rem;
+  }
+}
+
+/* Inputs de ancho completo en móvil */
+.transaction-form .p-inputtext,
+.transaction-form .p-select,
+.transaction-form .p-datepicker-input {
+  width: 100%;
+}
+
+/* ------------------------------------------------------------
+   8. Lista de transacciones (DataTable)
+   ------------------------------------------------------------ */
+/* Hace la tabla scrollable horizontalmente en móvil */
+.p-datatable-wrapper {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.p-datatable table {
+  min-width: 480px;
+}
+
+/* Reduce padding de celdas en móvil */
+.p-datatable .p-datatable-tbody > tr > td,
+.p-datatable .p-datatable-thead > tr > th {
+  padding: 0.5rem 0.5rem;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .p-datatable table {
+    min-width: unset;
+  }
+
+  .p-datatable .p-datatable-tbody > tr > td,
+  .p-datatable .p-datatable-thead > tr > th {
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   9. Formularios de autenticación (Login / Register)
+   ------------------------------------------------------------ */
+.auth-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 1.5rem 0.75rem;
+  min-height: calc(100dvh - 80px);
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 400px;
+}
+
+@media (min-width: 480px) {
+  .auth-wrapper {
+    align-items: center;
+    padding: 2rem 1rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   10. Drawer lateral
+   ------------------------------------------------------------ */
+/* Ocupa el 85 % del viewport en móvil */
+.p-drawer {
+  width: min(280px, 85vw) !important;
+}
+
+/* ------------------------------------------------------------
+   11. Botones: área táctil mínima recomendada (44 × 44 px)
+   ------------------------------------------------------------ */
+.p-button {
+  min-height: 2.5rem;
+  min-width: 2.5rem;
+}
+
+/* Botones de ancho completo en móvil dentro de formularios */
+.form-actions .p-button {
+  width: 100%;
+}
+
+@media (min-width: 480px) {
+  .form-actions .p-button {
+    width: auto;
+  }
+}
+
+/* ------------------------------------------------------------
+   12. Typography helpers
+   ------------------------------------------------------------ */
+.text-4xl {
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
+}
+
+.text-3xl {
+  font-size: clamp(1.25rem, 4vw, 1.875rem);
+}
+
+.text-2xl {
+  font-size: clamp(1.1rem, 3.5vw, 1.5rem);
+}
+
+/* ------------------------------------------------------------
+   13. Utilidades de espaciado responsivo
+   ------------------------------------------------------------ */
+.gap-responsive {
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .gap-responsive {
+    gap: 1.25rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   14. Toast — fix para pantallas < 400 px
+   ------------------------------------------------------------ */
+/*
+  PrimeVue posiciona el contenedor del toast con `top-right` usando
+  position:fixed + right/top fijos. En pantallas muy angostas el ancho
+  del mensaje desborda la pantalla. Lo ajustamos para que ocupe casi
+  todo el ancho y se centre arriba.
+*/
+@media (max-width: 399px) {
+  .p-toast {
+    /* Ocupa el ancho del viewport con márgenes laterales */
+    width: calc(100vw - 1.5rem) !important;
+    left: 0.75rem !important;
+    right: 0.75rem !important;
+    top: 0.75rem !important;
+  }
+
+  .p-toast-message {
+    width: 100% !important;
+  }
+
+  .p-toast-message-content {
+    padding: 0.75rem 0.875rem;
+    gap: 0.5rem;
+  }
+
+  /* Texto del summary más compacto */
+  .p-toast-summary {
+    font-size: 0.875rem;
+  }
+
+  /* Texto del detail no desborda */
+  .p-toast-detail {
+    font-size: 0.8rem;
+    word-break: break-word;
+  }
+
+  /* Botón de cierre: área táctil mínima */
+  .p-toast-close-button {
+    min-width: 2rem;
+    min-height: 2rem;
+  }
+}
+
+/* ------------------------------------------------------------
+   15. Dark mode
+   ------------------------------------------------------------ */
+.app-dark .balance-card {
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
+}
+
+.app-dark .p-datatable .p-datatable-tbody > tr:nth-child(even) {
+  background-color: var(--p-surface-hover);
+}
