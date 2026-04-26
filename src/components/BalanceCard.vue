@@ -13,7 +13,7 @@ const formatCurrency = (value: number) => {
         class="border-round-xl p-4 shadow-3 text-white"
         :style="{
             background: balance >= 0
-                ? 'linear-gradient(135deg, #1976d2 0%, #42a5f5 100%)'
+                ? 'linear-gradient(135deg, #4caf50 0%, #81c784 100%)'
                 : 'linear-gradient(135deg, #c62828 0%, #ef5350 100%)'
         }"
     >
