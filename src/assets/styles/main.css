@@ -47,11 +47,7 @@ video {
 
 /* Topbar */
 .topbar {
-  position: sticky;
-  top: 0;
-  z-index: 100;
   padding: 0.75rem 1rem; /* más compacto en móvil */
-  background-color: var(--p-surface-card, #ffffff);
   border-bottom: 1px solid var(--p-surface-border);
 }
 

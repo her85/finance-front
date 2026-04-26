@@ -54,20 +54,20 @@ const logout = async () => {
         <LoaderSpinner />
 
         <!-- Topbar -->
-        <Toolbar v-if="currentUser" class="topbar surface-card shadow-2 px-4 py-3" style="position: sticky; top: 0; z-index: 100;">
+        <Toolbar v-if="currentUser" class="topbar shadow-2 px-4 py-3" style="position: sticky; top: 0; z-index: 100; background-color: var(--p-primary-500);">
             <template #start>
                 <div class="flex align-items-center gap-3">
-                    <i class="pi pi-wallet text-primary text-2xl"></i>
-                    <span class="text-xl font-bold text-color">FinanceApp</span>
+                    <i class="pi pi-wallet text-white text-2xl"></i>
+                    <span class="text-xl font-bold text-white">FinanceApp</span>
                 </div>
             </template>
             <template #end>
-                <div class="flex align-items-center gap-2">
+                <div class="flex align-items-center gap-3">
                     <Button
                         :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
                         rounded
                         text
-                        severity="secondary"
+                        style="background-color: var(--p-primary-500); color: #fff"
                         @click="toggleDarkMode"
                         :aria-label="isDark ? 'Modo claro' : 'Modo oscuro'"
                     />
@@ -75,7 +75,7 @@ const logout = async () => {
                         :label="userInitials"
                         shape="circle"
                         class="cursor-pointer"
-                        style="background-color: var(--p-primary-500); color: #fff; font-weight: 700;"
+                        style="background-color: var(--p-secondary-500); color: #fff; font-weight: 700;"
                         @click="drawerOpen = true"
                     />
                 </div>
@@ -123,5 +123,3 @@ const logout = async () => {
         </Drawer>
     </div>
 </template>
-
-<!-- Styles consolidated in src/assets/styles/main.css -->

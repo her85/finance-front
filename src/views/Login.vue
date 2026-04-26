@@ -2,7 +2,6 @@
 import { ref } from 'vue';
 import { supabase } from '@/api/supabase';
 import { useRouter } from 'vue-router';
-import { hideLoading } from '@/stores/loading';
 
 const router = useRouter();
 const email = ref('');
@@ -50,7 +49,6 @@ const login = async () => {
         error.value = 'Email o contraseña incorrectos.';
     } finally {
         loading.value = false;
-        hideLoading();
     }
 };
 </script>

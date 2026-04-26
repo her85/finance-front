@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { supabase, currentUser, type Transaction } from '@/api/supabase';
+import { showLoading, hideLoading } from '@/stores/loading';
 import BalanceCard from '@/components/BalanceCard.vue';
 import TransactionForm from '@/components/TransactionForm.vue';
 import TransactionList from '@/components/TransactionList.vue';
@@ -64,6 +65,7 @@ const formatCurrency = (v: number) =>
     new Intl.NumberFormat('es-AR', { style: 'currency', currency: 'ARS' }).format(v);
 
 const loadData = async () => {
+    showLoading('Cargando aplicación...');
     try {
         const userId = currentUser.value?.id ?? null;
         let res;
@@ -94,6 +96,8 @@ const loadData = async () => {
     } catch (e) {
         console.error(e);
         transactions.value = [];
+    } finally {
+        hideLoading();
     }
 };
 
