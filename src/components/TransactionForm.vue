@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from 'vue';
 import { supabase, currentUser, type Category } from '@/api/supabase';
 import { useToast } from 'primevue/usetoast';
+import { sanitizeText } from '@/utils/sanitize';
 
 const emit = defineEmits(['saved']);
 const toast = useToast();
@@ -22,9 +23,6 @@ const types = [
 const filteredCategories = computed(() =>
     allCategories.value.filter(c => c.type === type.value)
 );
-
-const sanitizeText = (val: string) => val.trim().replace(/<[^>]*>/g, '').slice(0, 500);
-
 const validate = (): boolean => {
     errors.value = { amount: '', category: '', date: '' };
     let valid = true;

@@ -4,6 +4,7 @@ import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 import { supabase, type Transaction, type Category } from '@/api/supabase';
 import { FilterMatchMode } from '@primevue/core/api';
+import { sanitizeText } from '@/utils/sanitize';
 
 const props = defineProps<{ transactions: Transaction[] }>();
 const emit = defineEmits(['refresh']);
@@ -88,9 +89,6 @@ const onEditTypeChange = () => {
     editItem.value.category = '';
     editCategories.value = allCategories.value.filter(c => c.type === editItem.value.type);
 };
-
-const sanitizeText = (val: string) => val.trim().replace(/<[^>]*>/g, '').slice(0, 500);
-
 const editErrors = ref({ amount: '', category: '', date: '' });
 
 const validateEdit = (): boolean => {

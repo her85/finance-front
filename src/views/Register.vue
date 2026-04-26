@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { supabase } from '@/api/supabase';
 import { useRouter } from 'vue-router';
 import { showLoading, hideLoading } from '@/stores/loading';
+import { sanitizeText } from '@/utils/sanitize';
 
 const router = useRouter();
 const name = ref('');
@@ -73,7 +74,7 @@ const register = async () => {
 
         // Create or update profile row if possible
         if (signInData?.user?.id) {
-            await supabase.from('profiles').upsert({ id: signInData.user.id, name: name.value.trim() });
+            await supabase.from('profiles').upsert({ id: signInData.user.id, name: sanitizeText(name.value) });
         }
 
         await router.push('/');
