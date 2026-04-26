@@ -34,6 +34,7 @@ import TabList from 'primevue/tablist';
 import Tab from 'primevue/tab';
 import TabPanels from 'primevue/tabpanels';
 import TabPanel from 'primevue/tabpanel';
+import Toolbar from 'primevue/toolbar';
 import Ripple from 'primevue/ripple';
 import ConfirmationService from 'primevue/confirmationservice';
 import ToastService from 'primevue/toastservice';
@@ -77,6 +78,7 @@ app.component('TabList', TabList);
 app.component('Tab', Tab);
 app.component('TabPanels', TabPanels);
 app.component('TabPanel', TabPanel);
+app.component('Toolbar', Toolbar);
 app.directive('ripple', Ripple);
 
 app.mount('#app');

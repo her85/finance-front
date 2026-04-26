@@ -54,29 +54,33 @@ const logout = async () => {
         <LoaderSpinner />
 
         <!-- Topbar -->
-        <header v-if="currentUser" class="topbar surface-card shadow-2 px-4 py-3 flex align-items-center justify-content-between" style="position: sticky; top: 0; z-index: 100;">
-            <div class="flex align-items-center gap-3">
-                <i class="pi pi-wallet text-primary text-2xl"></i>
-                <span class="text-xl font-bold text-color">FinanceApp</span>
-            </div>
-            <div class="flex align-items-center gap-2">
-                <Button
-                    :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
-                    rounded
-                    text
-                    severity="secondary"
-                    @click="toggleDarkMode"
-                    :aria-label="isDark ? 'Modo claro' : 'Modo oscuro'"
-                />
-                <Avatar
-                    :label="userInitials"
-                    shape="circle"
-                    class="cursor-pointer"
-                    style="background-color: var(--p-primary-500); color: #fff; font-weight: 700;"
-                    @click="drawerOpen = true"
-                />
-            </div>
-        </header>
+        <Toolbar v-if="currentUser" class="topbar surface-card shadow-2 px-4 py-3" style="position: sticky; top: 0; z-index: 100;">
+            <template #start>
+                <div class="flex align-items-center gap-3">
+                    <i class="pi pi-wallet text-primary text-2xl"></i>
+                    <span class="text-xl font-bold text-color">FinanceApp</span>
+                </div>
+            </template>
+            <template #end>
+                <div class="flex align-items-center gap-2">
+                    <Button
+                        :icon="isDark ? 'pi pi-sun' : 'pi pi-moon'"
+                        rounded
+                        text
+                        severity="secondary"
+                        @click="toggleDarkMode"
+                        :aria-label="isDark ? 'Modo claro' : 'Modo oscuro'"
+                    />
+                    <Avatar
+                        :label="userInitials"
+                        shape="circle"
+                        class="cursor-pointer"
+                        style="background-color: var(--p-primary-500); color: #fff; font-weight: 700;"
+                        @click="drawerOpen = true"
+                    />
+                </div>
+            </template>
+        </Toolbar>
 
         <!-- Contenido principal -->
         <main class="px-3 py-4" style="max-width: 960px; margin: 0 auto;">
@@ -120,14 +124,4 @@ const logout = async () => {
     </div>
 </template>
 
-<style>
-body {
-    background-color: var(--p-surface-ground);
-    font-family: var(--p-font-family);
-    margin: 0;
-}
-
-.topbar {
-    border-bottom: 1px solid var(--p-surface-border);
-}
-</style>
+<!-- Styles consolidated in src/assets/styles/main.css -->

@@ -23,7 +23,7 @@ html {
 
 body {
   margin: 0;
-  font-family: var(--p-font-family, 'Inter', sans-serif);
+  font-family: var(--p-font-family, "Inter", sans-serif);
   background-color: var(--p-surface-ground);
   color: var(--p-text-color);
   line-height: 1.5;
@@ -50,14 +50,15 @@ video {
   position: sticky;
   top: 0;
   z-index: 100;
-  padding: 0.75rem 1rem;     /* más compacto en móvil */
+  padding: 0.75rem 1rem; /* más compacto en móvil */
   background-color: var(--p-surface-card, #ffffff);
+  border-bottom: 1px solid var(--p-surface-border);
 }
 
 /* Contenido principal */
 main {
   width: 100%;
-  padding: 1rem 0.75rem;     /* márgenes laterales mínimos en móvil */
+  padding: 1rem 0.75rem; /* márgenes laterales mínimos en móvil */
   margin-inline: auto;
 }
 
@@ -92,44 +93,7 @@ main {
 }
 
 /* ------------------------------------------------------------
-   3. BalanceCard
-   ------------------------------------------------------------ */
-.balance-card {
-  border-radius: 1rem;
-  padding: 1.25rem 1rem;     /* compacto en móvil */
-  color: #fff;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
-}
-
-.balance-card__amount {
-  font-size: 2rem;
-  font-weight: 700;
-  line-height: 1.1;
-  word-break: break-all;
-}
-
-@media (min-width: 480px) {
-  .balance-card {
-    padding: 1.5rem 1.25rem;
-  }
-
-  .balance-card__amount {
-    font-size: 2.25rem;
-  }
-}
-
-@media (min-width: 768px) {
-  .balance-card {
-    padding: 2rem 1.75rem;
-  }
-
-  .balance-card__amount {
-    font-size: 2.75rem;
-  }
-}
-
-/* ------------------------------------------------------------
-   4. Tarjetas de resumen (ingresos / gastos)
+   3. Tarjetas de resumen (ingresos / gastos)
    ------------------------------------------------------------ */
 /* En móvil las tarjetas apiladas necesitan altura automática */
 .p-card {
@@ -144,7 +108,7 @@ main {
 }
 
 /* ------------------------------------------------------------
-   5. Grid responsive (complementa PrimeFlex col-12 / md:col-6)
+   4. Grid responsive (complementa PrimeFlex col-12 / md:col-6)
    ------------------------------------------------------------ */
 .grid {
   row-gap: 0.75rem;
@@ -157,7 +121,7 @@ main {
 }
 
 /* ------------------------------------------------------------
-   6. Tabs de periodo (Mes / Año / Total)
+   5. Tabs de periodo (Mes / Año / Total)
    ------------------------------------------------------------ */
 /* En móvil los tabs ocupan todo el ancho */
 .p-tablist {
@@ -176,54 +140,8 @@ main {
   text-align: center;
 }
 
-/* Selectores de mes/año: apilan en columna en móvil */
-.period-selectors {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-}
-
-@media (min-width: 480px) {
-  .period-selectors {
-    flex-direction: row;
-    align-items: center;
-  }
-}
-
 /* ------------------------------------------------------------
-   7. Formulario de transacción
-   ------------------------------------------------------------ */
-.transaction-form .p-card-body {
-  padding: 1rem;
-}
-
-.transaction-form .form-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.75rem;
-}
-
-@media (min-width: 480px) {
-  .transaction-form .form-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 768px) {
-  .transaction-form .p-card-body {
-    padding: 1.5rem;
-  }
-}
-
-/* Inputs de ancho completo en móvil */
-.transaction-form .p-inputtext,
-.transaction-form .p-select,
-.transaction-form .p-datepicker-input {
-  width: 100%;
-}
-
-/* ------------------------------------------------------------
-   8. Lista de transacciones (DataTable)
+   6. Lista de transacciones (DataTable)
    ------------------------------------------------------------ */
 /* Hace la tabla scrollable horizontalmente en móvil */
 .p-datatable-wrapper {
@@ -255,30 +173,7 @@ main {
 }
 
 /* ------------------------------------------------------------
-   9. Formularios de autenticación (Login / Register)
-   ------------------------------------------------------------ */
-.auth-wrapper {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  padding: 1.5rem 0.75rem;
-  min-height: calc(100dvh - 80px);
-}
-
-.auth-card {
-  width: 100%;
-  max-width: 400px;
-}
-
-@media (min-width: 480px) {
-  .auth-wrapper {
-    align-items: center;
-    padding: 2rem 1rem;
-  }
-}
-
-/* ------------------------------------------------------------
-   10. Drawer lateral
+   7. Drawer lateral
    ------------------------------------------------------------ */
 /* Ocupa el 85 % del viewport en móvil */
 .p-drawer {
@@ -286,26 +181,15 @@ main {
 }
 
 /* ------------------------------------------------------------
-   11. Botones: área táctil mínima recomendada (44 × 44 px)
+   8. Botones: área táctil mínima recomendada (44 × 44 px)
    ------------------------------------------------------------ */
 .p-button {
   min-height: 2.5rem;
   min-width: 2.5rem;
 }
 
-/* Botones de ancho completo en móvil dentro de formularios */
-.form-actions .p-button {
-  width: 100%;
-}
-
-@media (min-width: 480px) {
-  .form-actions .p-button {
-    width: auto;
-  }
-}
-
 /* ------------------------------------------------------------
-   12. Typography helpers
+   9. Typography helpers
    ------------------------------------------------------------ */
 .text-4xl {
   font-size: clamp(1.5rem, 5vw, 2.25rem);
@@ -320,27 +204,9 @@ main {
 }
 
 /* ------------------------------------------------------------
-   13. Utilidades de espaciado responsivo
+   10. Toast — fix para pantallas < 400 px
    ------------------------------------------------------------ */
-.gap-responsive {
-  gap: 0.75rem;
-}
 
-@media (min-width: 768px) {
-  .gap-responsive {
-    gap: 1.25rem;
-  }
-}
-
-/* ------------------------------------------------------------
-   14. Toast — fix para pantallas < 400 px
-   ------------------------------------------------------------ */
-/*
-  PrimeVue posiciona el contenedor del toast con `top-right` usando
-  position:fixed + right/top fijos. En pantallas muy angostas el ancho
-  del mensaje desborda la pantalla. Lo ajustamos para que ocupe casi
-  todo el ancho y se centre arriba.
-*/
 @media (max-width: 399px) {
   .p-toast {
     /* Ocupa el ancho del viewport con márgenes laterales */
@@ -377,13 +243,7 @@ main {
   }
 }
 
-/* ------------------------------------------------------------
-   15. Dark mode
-   ------------------------------------------------------------ */
-.app-dark .balance-card {
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.45);
-}
-
+/* Dark-mode tweaks */
 .app-dark .p-datatable .p-datatable-tbody > tr:nth-child(even) {
   background-color: var(--p-surface-hover);
 }
