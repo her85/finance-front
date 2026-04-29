@@ -1,6 +1,7 @@
 import { createApp } from 'vue';
 import App from '@/App.vue';
 import router from '@/router';
+import { registerSW } from 'virtual:pwa-register';
 
 // Importar PrimeVue y estilos
 import PrimeVue from 'primevue/config';
@@ -82,3 +83,13 @@ app.component('Toolbar', Toolbar);
 app.directive('ripple', Ripple);
 
 app.mount('#app');
+
+registerSW({
+    immediate: true,
+    onRegistered(reg) {
+        console.log('Service worker registered:', reg);
+    },
+    onRegisterError(err) {
+        console.warn('Service worker registration failed:', err);
+    }
+});
