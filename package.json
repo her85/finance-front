@@ -26,4 +26,7 @@
     "vite-plugin-pwa": "^0.19.8",
     "vue-tsc": "^3.2.6"
   }
+  ,"overrides": {
+    "serialize-javascript": "^7.0.5"
+  }
 }
