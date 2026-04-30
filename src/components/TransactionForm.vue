@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { supabase, currentUser, type Category } from '@/api/supabase';
+import { createTransaction } from '@/api/offline';
 import { useToast } from 'primevue/usetoast';
 import { sanitizeText } from '@/utils/sanitize';
 
@@ -60,23 +61,27 @@ const save = async () => {
     if (!validate()) return;
 
     const userId = currentUser.value?.id ?? null;
-    const { /*data,*/ error } = await supabase.from('transactions').insert([
-        {
-            amount: amount.value,
-            type: type.value,
-            category_id: categoryId.value,
-            user_id: userId,
-            date: date.value.toISOString(),
-            note: sanitizeText(note.value),
-        },
-    ]);
+    const payload = {
+        amount: amount.value,
+        type: type.value,
+        category_id: categoryId.value,
+        user_id: userId,
+        date: date.value.toISOString(),
+        note: sanitizeText(note.value),
+    };
 
-    if (error) {
+    const res: any = await createTransaction(payload);
+
+    if (!res || !res.success) {
         toast.add({ severity: 'error', summary: 'Error', detail: 'No se pudo crear el movimiento.', life: 3000 });
         return;
     }
 
-    toast.add({ severity: 'success', summary: 'Guardado', detail: 'Movimiento registrado correctamente.', life: 3000 });
+    if (res.offline) {
+        toast.add({ severity: 'info', summary: 'Guardado (offline)', detail: 'Movimiento guardado localmente y será sincronizado.', life: 4000 });
+    } else {
+        toast.add({ severity: 'success', summary: 'Guardado', detail: 'Movimiento registrado correctamente.', life: 3000 });
+    }
 
     amount.value = 0;
     note.value = '';

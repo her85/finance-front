@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import App from '@/App.vue';
 import router from '@/router';
 import { registerSW } from 'virtual:pwa-register';
+import { initOfflineSync } from '@/api/offline';
 
 // Importar PrimeVue y estilos
 import PrimeVue from 'primevue/config';
@@ -93,3 +94,6 @@ registerSW({
         console.warn('Service worker registration failed:', err);
     }
 });
+
+// Inicializar lógica offline / cola de sincronización
+initOfflineSync();

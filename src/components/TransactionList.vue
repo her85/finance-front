@@ -3,6 +3,7 @@ import { ref, onMounted } from 'vue';
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
 import { supabase, type Transaction, type Category } from '@/api/supabase';
+import { updateTransaction, deleteTransaction } from '@/api/offline';
 import { FilterMatchMode } from '@primevue/core/api';
 import { sanitizeText } from '@/utils/sanitize';
 
@@ -61,12 +62,16 @@ const confirmDelete = (id: string) => {
         acceptLabel: 'Eliminar',
         acceptClass: 'p-button-danger',
         accept: async () => {
-            const { error } = await supabase.from('transactions').delete().eq('id', id);
-            if (error) {
+            const res: any = await deleteTransaction(id);
+            if (!res || !res.success) {
                 toast.add({ severity: 'error', summary: 'Error', detail: 'No se pudo eliminar.', life: 3000 });
                 return;
             }
-            toast.add({ severity: 'success', summary: 'Eliminado', detail: 'Movimiento eliminado.', life: 3000 });
+            if (res.offline) {
+                toast.add({ severity: 'info', summary: 'Eliminado (offline)', detail: 'Eliminación pendiente de sincronización.', life: 3500 });
+            } else {
+                toast.add({ severity: 'success', summary: 'Eliminado', detail: 'Movimiento eliminado.', life: 3000 });
+            }
             emit('refresh');
         },
     });
@@ -117,23 +122,23 @@ const validateEdit = (): boolean => {
 
 const saveEdit = async () => {
     if (!editItem.value.id || !validateEdit()) return;
-    const { error } = await supabase
-        .from('transactions')
-        .update({
-            amount: editItem.value.amount,
-            type: editItem.value.type,
-            category_id: editItem.value.category,
-            date: editItem.value.dateObj?.toISOString(),
-            note: sanitizeText(editItem.value.note ?? ''),
-        })
-        .eq('id', editItem.value.id);
-
-    if (error) {
+    const payload = {
+        amount: editItem.value.amount,
+        type: editItem.value.type,
+        category_id: editItem.value.category,
+        date: editItem.value.dateObj?.toISOString(),
+        note: sanitizeText(editItem.value.note ?? ''),
+    };
+    const res: any = await updateTransaction(editItem.value.id, payload);
+    if (!res || !res.success) {
         toast.add({ severity: 'error', summary: 'Error', detail: 'No se pudo actualizar.', life: 3000 });
         return;
     }
-
-    toast.add({ severity: 'success', summary: 'Guardado', detail: 'Movimiento actualizado.', life: 3000 });
+    if (res.offline) {
+        toast.add({ severity: 'info', summary: 'Guardado (offline)', detail: 'Edición guardada localmente y será sincronizada.', life: 3500 });
+    } else {
+        toast.add({ severity: 'success', summary: 'Guardado', detail: 'Movimiento actualizado.', life: 3000 });
+    }
     editDialog.value = false;
     emit('refresh');
 };

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
-import { supabase, currentUser, type Transaction } from '@/api/supabase';
+import { currentUser, type Transaction } from '@/api/supabase';
+import { fetchTransactions } from '@/api/offline';
 import { showLoading, hideLoading } from '@/stores/loading';
 import BalanceCard from '@/components/BalanceCard.vue';
 import TransactionForm from '@/components/TransactionForm.vue';
@@ -68,31 +69,8 @@ const loadData = async () => {
     showLoading('Cargando aplicación...');
     try {
         const userId = currentUser.value?.id ?? null;
-        let res;
-        if (userId) {
-            res = await supabase
-                .from('transactions')
-                .select('*, categories(*)')
-                .eq('user_id', userId)
-                .order('date', { ascending: false });
-        } else {
-            res = await supabase
-                .from('transactions')
-                .select('*, categories(*)')
-                .order('date', { ascending: false });
-        }
-        const { data, error } = res as { data: any[] | null; error: any };
-        if (error) {
-            console.error('Error loading transactions', error);
-            transactions.value = [];
-            return;
-        }
-
-        transactions.value = (data ?? []).map((t: any) => ({
-            ...t,
-            category: t.category_id,
-            expand: { category: Array.isArray(t.categories) ? t.categories[0] ?? null : null },
-        })) as Transaction[];
+        const data = await fetchTransactions(userId);
+        transactions.value = (data ?? []) as Transaction[];
     } catch (e) {
         console.error(e);
         transactions.value = [];
