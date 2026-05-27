@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import Dashboard from '@/views/Dashboard.vue';
 import Login from '@/views/Login.vue';
-import Register from '@/views/Register.vue';
+//import Register from '@/views/Register.vue';
+import NotFound from '@/views/NotFound.vue';
 import { supabase } from '@/api/supabase';
 import { showLoading, hideLoading } from '@/stores/loading';
 
@@ -10,11 +11,12 @@ const router = createRouter({
   routes: [
     { path: '/', component: Dashboard },
     { path: '/login', component: Login },
-    { path: '/register', component: Register }
+    /*{ path: '/register', component: Register },*/
+    { path: '/:pathMatch(.*)*', name: 'NotFound', component: NotFound }
   ]
 });
 
-const PUBLIC_PATHS = ['/login', '/register'];
+const PUBLIC_PATHS = ['/login', /*'/register'*/];
 
 router.beforeEach(async (to) => {
   showLoading();
