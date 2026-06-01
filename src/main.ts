@@ -7,9 +7,90 @@ import { initOfflineSync } from '@/api/offline';
 // Importar PrimeVue y estilos
 import PrimeVue from 'primevue/config';
 import Aura from '@primevue/themes/aura';
+import { definePreset } from '@primevue/themes';
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.css';
 import '@/assets/styles/main.css';
+
+// Preset personalizado: toast adaptado al color primario del proyecto
+const FinancePreset = definePreset(Aura, {
+    components: {
+        toast: {
+            colorScheme: {
+                light: {
+                    info: {
+                        background: 'color-mix(in srgb, {blue.50}, transparent 5%)',
+                        borderColor: '{blue.200}',
+                        color: '{blue.700}',
+                        detailColor: '{surface.700}',
+                        shadow: '0px 4px 8px 0px color-mix(in srgb, {blue.500}, transparent 92%)',
+                        closeButton: {
+                            hoverBackground: '{blue.100}',
+                            focusRing: { color: '{blue.700}', shadow: 'none' },
+                        },
+                    },
+                    success: {
+                        background: 'color-mix(in srgb, {green.50}, transparent 5%)',
+                        borderColor: '{green.200}',
+                        color: '{green.700}',
+                        detailColor: '{surface.700}',
+                        shadow: '0px 4px 8px 0px color-mix(in srgb, {green.500}, transparent 92%)',
+                        closeButton: {
+                            hoverBackground: '{green.100}',
+                            focusRing: { color: '{green.700}', shadow: 'none' },
+                        },
+                    },
+                    error: {
+                        background: 'color-mix(in srgb, {red.50}, transparent 5%)',
+                        borderColor: '{red.200}',
+                        color: '{red.700}',
+                        detailColor: '{surface.700}',
+                        shadow: '0px 4px 8px 0px color-mix(in srgb, {red.500}, transparent 92%)',
+                        closeButton: {
+                            hoverBackground: '{red.100}',
+                            focusRing: { color: '{red.700}', shadow: 'none' },
+                        },
+                    },
+                },
+                dark: {
+                    info: {
+                        background: 'color-mix(in srgb, {blue.500}, transparent 5%)',
+                        borderColor: '{blue.400}',
+                        color: '{blue.100}',
+                        detailColor: '{surface.0}',
+                        shadow: '0px 4px 8px 0px color-mix(in srgb, {blue.900}, transparent 80%)',
+                        closeButton: {
+                            hoverBackground: 'rgba(255,255,255,0.1)',
+                            focusRing: { color: '{blue.200}', shadow: 'none' },
+                        },
+                    },
+                    success: {
+                        background: 'color-mix(in srgb, {green.500}, transparent 5%)',
+                        borderColor: '{green.400}',
+                        color: '{green.100}',
+                        detailColor: '{surface.0}',
+                        shadow: '0px 4px 8px 0px color-mix(in srgb, {green.900}, transparent 80%)',
+                        closeButton: {
+                            hoverBackground: 'rgba(255,255,255,0.1)',
+                            focusRing: { color: '{green.200}', shadow: 'none' },
+                        },
+                    },
+                    error: {
+                        background: 'color-mix(in srgb, {red.500}, transparent 5%)',
+                        borderColor: '{red.400}',
+                        color: '{red.100}',
+                        detailColor: '{surface.0}',
+                        shadow: '0px 4px 8px 0px color-mix(in srgb, {red.900}, transparent 80%)',
+                        closeButton: {
+                            hoverBackground: 'rgba(255,255,255,0.1)',
+                            focusRing: { color: '{red.200}', shadow: 'none' },
+                        },
+                    },
+                },
+            },
+        },
+    },
+});
 
 // Componentes PrimeVue
 import Button from 'primevue/button';
@@ -45,7 +126,7 @@ const app = createApp(App);
 
 app.use(PrimeVue, {
     theme: {
-        preset: Aura,
+        preset: FinancePreset,
         options: {
             darkModeSelector: '.app-dark'
         }
