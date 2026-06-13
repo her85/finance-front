@@ -110,10 +110,13 @@ const login = async () => {
                             @click="login"
                         />
 
-                      <!-- <p class="text-center text-sm text-color-secondary m-0">
+                        <p class="text-center text-sm text-color-secondary m-0">
                             ¿No tenés cuenta?
                             <RouterLink to="/register" class="text-primary font-medium">Registrate</RouterLink>
-                        </p>-->
+                        </p>
+                        <p class="text-center text-sm text-color-secondary mt-2 m-0">
+                            <RouterLink to="/" class="text-primary font-medium">Volver a Home</RouterLink>
+                        </p>
 
                     </div>
                 </template>
