@@ -40,3 +40,4 @@ coverage/
 # OS / editor
 Thumbs.db
 .history/
+package-lock.json
