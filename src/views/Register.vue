@@ -183,7 +183,7 @@ const register = async () => {
                             <RouterLink to="/login" class="text-primary font-medium">Ingresá</RouterLink>
                         </p>
                         <p class="text-center text-sm text-color-secondary mt-2 m-0">
-                            <RouterLink to="/" class="text-primary font-medium">Volver a Home</RouterLink>
+                            <RouterLink to="/" class="text-primary font-medium">Volver al inicio</RouterLink>
                         </p>
 
                     </div>
