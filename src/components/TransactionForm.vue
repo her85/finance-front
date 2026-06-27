@@ -172,7 +172,7 @@ const save = async () => {
                         :disabled="isDemo"
                         @click="save"
                     />
-                    <small v-if="isDemo" class="text-color-secondary mt-2">La cuenta demo es de solo lectura; no puede crear movimientos.</small>
+                    <small v-if="isDemo" class="text-color-secondary mt-2 p-4">La cuenta demo es de solo lectura; no puede crear movimientos.</small>
                 </div>
             </div>
         </template>
