@@ -3,7 +3,7 @@ import { useRouter } from 'vue-router';
 
 const router = useRouter();
 const goLogin = () => router.push('/login');
-const goRegister = () => router.push('/register');
+//const goRegister = () => router.push('/register');
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const goRegister = () => router.push('/register');
 
         <div class="flex gap-3 mt-5">
           <Button label="Iniciar sesión" class="p-button-lg p-button-primary" @click="goLogin" />
-          <Button label="Registrarse" class="p-button-lg" @click="goRegister" />
+          <!--<Button label="Registrarse" class="p-button-lg" @click="goRegister" />-->
         </div>
       </div>
 
