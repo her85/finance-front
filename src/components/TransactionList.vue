@@ -1,8 +1,13 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, computed } from 'vue';
 import { useConfirm } from 'primevue/useconfirm';
 import { useToast } from 'primevue/usetoast';
-import { supabase, type Transaction, type Category } from '@/api/supabase';
+import { supabase, currentUser, type Transaction, type Category } from '@/api/supabase';
+
+const DEMO_EMAIL = (import.meta.env.VITE_DEMO_EMAIL ?? '') as string;
+const isDemo = computed(() => currentUser.value?.email === DEMO_EMAIL);
+const showDemoNotice = ref(false);
+const openDemoNotice = () => { showDemoNotice.value = true; };
 import { updateTransaction, deleteTransaction } from '@/api/offline';
 import { FilterMatchMode } from '@primevue/core/api';
 import { sanitizeText } from '@/utils/sanitize';
@@ -212,6 +217,7 @@ const saveEdit = async () => {
                 <template #body="{ data }">
                     <div class="flex gap-1 justify-content-end">
                         <Button
+                            v-if="!isDemo"
                             icon="pi pi-pencil"
                             rounded text severity="info"
                             size="small"
@@ -219,11 +225,20 @@ const saveEdit = async () => {
                             @click="openEdit(data)"
                         />
                         <Button
+                            v-if="!isDemo"
                             icon="pi pi-trash"
                             rounded text severity="danger"
                             size="small"
                             aria-label="Eliminar"
                             @click="confirmDelete(data.id)"
+                        />
+                        <Button
+                            v-else
+                            icon="pi pi-ban"
+                            rounded text severity="secondary"
+                            size="small"
+                            aria-label="Demo"
+                            @click="openDemoNotice"
                         />
                     </div>
                 </template>
@@ -290,4 +305,12 @@ const saveEdit = async () => {
     </Dialog>
 
     <ConfirmDialog />
+    <Dialog v-model:visible="showDemoNotice" header="Funcionalidad limitada" modal :style="{ width: '380px' }">
+        <div class="p-4">
+            <p>Esta acción no está disponible en la versión demo. Iniciá sesión con una cuenta real para editar o eliminar movimientos.</p>
+            <div class="flex justify-content-end mt-3">
+                <Button label="Cerrar" text @click="showDemoNotice = false" />
+            </div>
+        </div>
+    </Dialog>
 </template>
