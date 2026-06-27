@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref } from 'vue';
 import { supabase } from '@/api/supabase';
+// Demo credentials from env
+const DEMO_EMAIL = (import.meta.env.VITE_DEMO_EMAIL ?? '') as string;
+const DEMO_PASSWORD = (import.meta.env.VITE_DEMO_PASSWORD ?? '') as string;
 import { useRouter } from 'vue-router';
 
 const router = useRouter();
@@ -47,6 +50,27 @@ const login = async () => {
         }
     } catch {
         error.value = 'Email o contraseña incorrectos.';
+    } finally {
+        loading.value = false;
+    }
+};
+
+const loginDemo = async () => {
+    if (!DEMO_EMAIL || !DEMO_PASSWORD) {
+        error.value = 'Credenciales demo no configuradas.';
+        return;
+    }
+    loading.value = true;
+    error.value = '';
+    try {
+        const res = await supabase.auth.signInWithPassword({ email: DEMO_EMAIL, password: DEMO_PASSWORD });
+        if (res.error) {
+            error.value = 'No se pudo iniciar sesión como demo.';
+        } else {
+            await router.push('/');
+        }
+    } catch {
+        error.value = 'No se pudo iniciar sesión como demo.';
     } finally {
         loading.value = false;
     }
@@ -108,6 +132,14 @@ const login = async () => {
                             :loading="loading"
                             class="w-full"
                             @click="login"
+                        />
+
+                        <Button
+                            label="Ingresar como demo"
+                            icon="pi pi-user"
+                            class="w-full p-button-secondary mt-2"
+                            :loading="loading"
+                            @click="loginDemo"
                         />
 
                         <p class="text-center text-sm text-color-secondary m-0">

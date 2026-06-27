@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue';
 import { supabase, currentUser, type Category } from '@/api/supabase';
+
+const DEMO_EMAIL = (import.meta.env.VITE_DEMO_EMAIL ?? '') as string;
+const isDemo = computed(() => currentUser.value?.email === DEMO_EMAIL);
 import { createTransaction } from '@/api/offline';
 import { useToast } from 'primevue/usetoast';
 import { sanitizeText } from '@/utils/sanitize';
@@ -161,12 +164,16 @@ const save = async () => {
                 </div>
 
                 <!-- Botón -->
-                <Button
-                    label="Guardar movimiento"
-                    icon="pi pi-check"
-                    class="w-full md:w-auto align-self-end"
-                    @click="save"
-                />
+                <div>
+                    <Button
+                        label="Guardar movimiento"
+                        icon="pi pi-check"
+                        class="w-full md:w-auto align-self-end"
+                        :disabled="isDemo"
+                        @click="save"
+                    />
+                    <small v-if="isDemo" class="text-color-secondary mt-2">La cuenta demo es de solo lectura; no puede crear movimientos.</small>
+                </div>
             </div>
         </template>
     </Card>

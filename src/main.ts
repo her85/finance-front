@@ -167,7 +167,7 @@ app.mount('#app');
 registerSW({
     immediate: true,
     onRegistered(reg) {
-        console.log('Service worker registered:', reg);
+        console.info('Service worker registered:', reg);
     },
     onRegisterError(err) {
         console.warn('Service worker registration failed:', err);

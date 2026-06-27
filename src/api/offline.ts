@@ -15,19 +15,16 @@ async function mapAndCacheServerRows(rows: any[]) {
     category: t.category_id,
     expand: { category: Array.isArray(t.categories) ? t.categories[0] ?? null : null },
   }));
-  // cache each
   for (const r of mapped) {
     try {
       await idb.put(TX_STORE, r);
     } catch (e) {
-      // ignore cache errors
     }
   }
   return mapped;
 }
 
 export async function fetchTransactions(userId?: string) {
-  // Try network first
   if (navigator.onLine) {
     try {
       let res: any;
@@ -45,12 +42,11 @@ export async function fetchTransactions(userId?: string) {
         return await mapAndCacheServerRows(data);
       }
     } catch (e) {
-      // fall through to cached
       console.warn('fetchTransactions network failed, falling back to cache', e);
     }
   }
 
-  // Offline / fallback: return cached transactions (filter by userId if given)
+  // Offline / fallback
   try {
     const cached = await idb.getAll(TX_STORE);
     const list = (cached ?? []).filter((c: any) => (userId ? c.user_id === userId : true));
@@ -64,7 +60,6 @@ export async function fetchTransactions(userId?: string) {
 }
 
 export async function createTransaction(payload: any) {
-  // Ensure user_id
   const userId = payload.user_id ?? currentUser.value?.id ?? null;
   const txPayload = { ...payload, user_id: userId };
 
@@ -84,11 +79,10 @@ export async function createTransaction(payload: any) {
       return { success: true, data: created };
     } catch (e) {
       console.warn('Network insert failed, queuing', e);
-      // fallthrough to offline
     }
   }
 
-  // Offline: create local temp item and queue it
+  // Offline: create local temp
   try {
     const tempId = generateTempId();
     const localTx = {
@@ -127,26 +121,22 @@ export async function updateTransaction(id: string, updates: any) {
     }
   }
 
-  // Offline: if id is a temp id, merge into pending insert; otherwise queue an update
   try {
     const local = await idb.get(TX_STORE, id);
     const merged = { ...(local ?? {}), ...updates };
     await idb.put(TX_STORE, merged);
 
     if (id?.toString().startsWith('temp-')) {
-      // find the insert op and merge the payload
       const queue = await idb.getAll(QUEUE_STORE);
       const insertOp = (queue ?? []).find((q: any) => q.type === 'insert' && q.tempId === id);
       if (insertOp) {
         insertOp.payload = { ...insertOp.payload, ...updates };
-        // replace: delete and re-add to preserve qid simplicity
         await idb.del(QUEUE_STORE, insertOp.qid);
         await idb.add(QUEUE_STORE, insertOp);
         return { success: true, offline: true, queued: true, data: merged };
       }
     }
 
-    // otherwise add an update operation
     await idb.add(QUEUE_STORE, { type: 'update', table: 'transactions', id, payload: updates, createdAt: Date.now() });
     return { success: true, offline: true, queued: true, data: merged };
   } catch (e) {
