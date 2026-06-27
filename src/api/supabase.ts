@@ -7,7 +7,6 @@ const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
 
 export const supabase = createClient(supabaseUrl, supabaseKey);
 
-// Convenience exports for common auth operations
 export const auth = supabase.auth;
 
 export const signUp = (email: string, password: string) =>

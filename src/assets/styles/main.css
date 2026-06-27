@@ -58,14 +58,14 @@ main {
   margin-inline: auto;
 }
 
-/* sm: un poco más de aire */
+/* sm */
 @media (min-width: 480px) {
   main {
     padding: 1.25rem 1rem;
   }
 }
 
-/* md: padding generoso */
+/* md */
 @media (min-width: 768px) {
   html {
     font-size: 16px;
