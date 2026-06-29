@@ -202,18 +202,12 @@ flowchart TB
 
 ```mermaid
 graph LR
-	subgraph Frontend
-		FE[Vue 3 + Vite + PWA]
-	end
-	subgraph Backend
-		BE[Supabase / API REST]
-	end
-	subgraph Storage
-		IDB[IndexedDB (offline)]
-	end
-	FE -->|Auth/API| BE
-	FE -->|Sync| IDB
-	IDB -->|Replicación| BE
+  FE[Frontend: Vue 3 + Vite + PWA]
+  BE[Backend: Supabase / API REST]
+  IDB[IndexedDB (offline)]
+  FE -->|Auth/API| BE
+  FE -->|Sync| IDB
+  IDB -->|Replicación| BE
 ```
 
 ### Diagrama de flujo: Registrar transacción
