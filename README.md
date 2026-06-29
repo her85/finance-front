@@ -197,19 +197,6 @@ flowchart TB
 		F[Exportar CSV] -->|usa| User
 	end
 ```
-
-### Diagrama de Arquitectura (alta nivel)
-
-```mermaid
-graph LR
-  FE[Frontend: Vue 3 + Vite + PWA]
-  BE[Backend: Supabase / API REST]
-  IDB[IndexedDB (offline)]
-  FE -->|Auth/API| BE
-  FE -->|Sync| IDB
-  IDB -->|Replicación| BE
-```
-
 ### Diagrama de flujo: Registrar transacción
 
 ```mermaid
